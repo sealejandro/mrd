@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>SERGIO ALEJANDRO ALBA CASTIBLANCO</h1>
+        <h2>ING SISTEMAS</h2>       
+        
+        <nav>
+        <ul>
+            <li><a href="#yo">Sobre mi</a></li>
+            <li><a href="#habilidades">Mis habilidades</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        </nav>
+    </header>
+<main>    
+    
+    <section id="yo">
+            <h2>Sobre mi</h2>
+        <p>HOLA, soy sergio me gusta la pizza y programar en java :v </p>
+    </section>
+
+    <section id="habilidades"> 
+            <h2>Mis habilidades</h2>
+        <ul>
+        <li>Habilidad 1: Java</li>
+        <li>Habilidad 2: Spring Boot</li>
+        <li>Habilidad 3: AWS</li>
+        <li>Habilidad 4: Docker</li>
+        <li>Habilidad 5: Git</li>
+        </ul>
+    </section>
+
+    <section id="tabla">
+        <h2>Tabla de horarios</h2>
+        <table>
+            <tr>
+                <th>Clase</th>
+                <th>Hora</th>
+            </tr>
+            <tr>
+                <td>Programacion web</td>
+                <td>Jueves 13:00 - 15:00</td>
+            </tr>
+            <tr>
+                <td>Ingles </td>
+                <td>Jueves 06:00 - 08:00</td>
+            </tr>
+            <tr>
+                <td>Formulacion</td>
+                <td>Miercoles 15:00 - 17:00</td>
+            </tr>
+        </table>
+    </section>
+
+    <h2>Image</h2>
+    <img src="java.jpg" alt="Imagen de Java">
+    
+</main>
+<footer id ="contacto">
+    <h2>Contacto</h2>
+    <p>whatsapp: 310 220 0400, correo:
+        <a href="sergioalba@unisangil.edu.co">sergioalba@unisangil.edu.co</a>
+    </p>
+    
+    <section id="form-section">
+        <h2>Formulario de Contacto</h2>
+        <form id="form-contacto">
+            <input type="text" id="nombre-contacto" placeholder="Tu nombre" required>
+            <input type="email" id="email-contacto" placeholder="tu@email.com" required>
+            <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje..."></textarea>
+            <span id="error-msg"></span>
+            <button type="submit">Enviar Mensaje</button>
+        </form>
+    </section>
+</footer>
+
+<script>
+    document.getElementById('form-contacto').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const nombre = document.getElementById('nombre-contacto').value.trim();
+        const email = document.getElementById('email-contacto').value.trim();
+        const mensaje = document.getElementById('mensaje').value.trim();
+        const errorMsg = document.getElementById('error-msg');
+        
+        errorMsg.textContent = '';
+        
+        if (!nombre) {
+            errorMsg.textContent = 'El nombre es requerido.';
+            return;
+        }
+        
+        if (!email) {
+            errorMsg.textContent = 'El email es requerido.';
+            return;
+        }
+        
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            errorMsg.textContent = 'El email no es válido.';
+            return;
+        }
+        
+        if (!mensaje) {
+            errorMsg.textContent = 'El mensaje es requerido.';
+            return;
+        }
+        
+        alert('Mensaje enviado correctamente: ' + nombre);
+        document.getElementById('form-contacto').reset();
+    });
+</script>
+</body>
+</html>
