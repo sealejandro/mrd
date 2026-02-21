@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sergio Alba y Diego Castellanos</title>
+        <style>
+            *,
+            *::before,
+            *::after {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                user-select: none;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            :root {
+                --primary: #3b648d;
+                --primary2: #2b4866;
+                --bg: #f3f4f6;
+                --card: #ffffff;
+                --text: #1f2937;
+            }
+
+            .user2 {
+                --primary: #2f7d4f;
+                --primary2: #245f3c;
+                --bg: #f3f4f6;
+                --card: #ffffff;
+                --text: #163d28;
+            }
+
+            body {
+                font-family: system-ui, sans-serif;
+                background: var(--bg);
+                color: var(--text);
+            }
+
+            /*HEADER*/
+            header {
+                width: 100%;
+                padding: 20px;
+                background-color: #fff;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                position: fixed;
+                top: 0;
+                z-index: 10;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .top-bar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .header-name h1 {
+                font-size: 20px;
+            }
+
+            .header-name h2 {
+                font-size: 16px;
+                font-weight: 400;
+            }
+
+            .header-actions__button {
+                border: none;
+                overflow: hidden;
+                cursor: pointer;
+                background-color: transparent;
+                transition: all 0.25s ease-in-out;
+            }
+
+            .header-actions__button:hover {
+                transform: scale(1.1);
+            }
+
+            .header-actions__button svg {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                fill: var(--primary);
+            }
+
+            /*NAV*/
+            nav {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            nav a {
+                text-decoration: none;
+                color: var(--text);
+                font-size: 14px;
+                font-weight: 500;
+                position: relative;
+            }
+
+            nav a::after {
+                content: "";
+                position: absolute;
+                width: 0%;
+                height: 2px;
+                background: var(--primary);
+                left: 0;
+                bottom: -4px;
+                transition: 0.3s;
+            }
+
+            nav a:hover::after {
+                width: 100%;
+            }
+
+            /*MAIN*/
+            main {
+                padding: 138px 20px 20px;
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            section {
+                scroll-margin-top: 138px;
+            }
+
+            /*PROFILE*/
+            .profile-picture-container {
+                height: 140px;
+                position: relative;
+            }
+
+            .profile-picture {
+                width: 140px;
+                height: 140px;
+                position: absolute;
+                background: #fff;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 8px solid white;
+                left: 50%;
+                transform: translateX(-50%);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, .15);
+            }
+
+            .profile-picture img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /*CARDS*/
+            .card-view {
+                background-color: var(--card);
+                padding: 24px;
+                border-radius: 18px;
+                border: 1px solid rgba(0, 0, 0, 0.04);
+                box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
+                transition: all .25s ease;
+            }
+
+            .card-view h2 {
+                margin-bottom: 4px;
+                font-size: 20px;
+            }
+
+            /*SKILLS*/
+            .skills-list {
+                list-style: none;
+                display: grid;
+                gap: 8px;
+                margin-left: -5px;
+            }
+
+            .skills-list li {
+                padding: 10px 14px;
+                border-radius: 10px;
+                transition: 0.3s;
+                cursor: pointer;
+            }
+
+            .skills-list li.seleccionado {
+                background: var(--primary2);
+                color: white;
+                transform: translateX(5px);
+            }
+
+            .skills-list li:hover {
+                background: var(--primary);
+                color: white;
+                transform: translateX(5px);
+            }
+
+            .add-skill {
+                margin-top: 12px;
+                display: flex;
+                gap: 8px;
+            }
+
+            .add-skill input {
+                flex: 1;
+                padding: 8px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+            }
+
+            .add-skill button {
+                padding: 8px 14px;
+                border: none;
+                border-radius: 8px;
+                background: var(--primary);
+                color: white;
+                cursor: pointer;
+            }
+
+            /*TABLE*/
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th {
+                background: var(--primary);
+                color: white;
+                padding: 10px;
+                text-align: left;
+            }
+
+            td {
+                padding: 10px;
+                border-bottom: 1px solid #c5c5c5;
+            }
+
+            /*FORM*/
+            #form-contacto {
+                border-radius: 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            #form-contacto input,
+            #form-contacto textarea {
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                font-family: inherit;
+                font-size: 14px;
+            }
+
+            #form-contacto button {
+                padding: 10px;
+                border: none;
+                border-radius: 8px;
+                background-color: var(--primary);
+                color: white;
+                font-weight: 600;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            #form-contacto button:hover {
+                opacity: 0.9;
+            }
+
+            #error-msg {
+                color: red;
+                font-size: 14px;
+                min-height: 18px;
+            }
+
+            /*FOOTER*/
+            footer {
+                background: #fff;
+                padding: 20px;
+                text-align: center;
+                border-top: 1px solid #eee;
+            }
+
+            footer a {
+                color: var(--primary);
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            /*RESPONSIVE*/
+            @media (min-width: 600px) {
+                nav {
+                    justify-content: left;
+                    gap: 30px;
+                }
+
+                .profile-picture-container {
+                    height: 200px;
+                }
+
+                .profile-picture {
+                    width: 200px;
+                    height: 200px;
+                }
+
+                .skills-list {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .add-skill {
+                    display: block;
+                }
+
+                .add-skill input {
+                    width: 300px;
+                }
+
+                .add-skill button {
+                    margin-left: 12px;
+                }
+            }
+
+            @media (min-width: 900px) {
+                nav {
+                    gap: 40px;
+                }
+
+                main {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-columns: 1fr 1fr;
+                }
+
+                .profile-picture-container {
+                    height: 260px;
+                }
+
+                .profile-picture {
+                    width: 260px;
+                    height: 260px;
+                }
+
+                .profile-picture-container {
+                    grid-column: 1 / -1;
+                }
+
+                #about-me {
+                    grid-column: 1 / -1;
+                }
+
+                #skills {
+                    grid-column: 1 / -1;
+                }
+            }
+
+            .fade-change {
+                animation: changeUser 0.5s ease-in-out;
+            }
+
+            @keyframes changeUser {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div class="top-bar">
+                <div class="header-name">
+                    <h1 id="user-name"></h1>
+                    <h2 id="user-career"></h2>
+                </div>
+                <div class="header-actions">
+                    <button class="header-actions__button">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                            fill="#e3e3e3">
+                            <path
+                                d="M645-555q35-35 35-85t-35-85q-35-35-85-35t-85 35q-35 35-35 85t35 85q35 35 85 35t85-35ZM320-240q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-240h480q-42-57-105.5-88.5T560-440q-71 0-134.5 31.5T320-320Z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <nav>
+                <a href="#about-me">Sobre mí</a>
+                <a href="#skills">Habilidades</a>
+                <a href="#table">Horarios</a>
+                <a href="#contact-me">Contacto</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="profile-picture-container">
+                <div class="profile-picture">
+                    <img id="profile-img" alt="foto de perfil">
+                </div>
+            </div>
+
+            <section id="about-me" class="card-view">
+                <h2>Sobre mí</h2>
+                <p id="about-text"></p>
+            </section>
+
+            <section id="skills" class="card-view">
+                <h2>Mis habilidades</h2>
+                <ul id="skills-list" class="skills-list">
+                    <li>Habilidad 1: Java</li>
+                    <li>Habilidad 2: Spring Boot</li>
+                    <li>Habilidad 3: AWS</li>
+                    <li>Habilidad 4: Docker</li>
+                    <li>Habilidad 5: Git</li>
+                </ul>
+                <p id="skills-counter">Seleccionadas: 0</p>
+                <div class="add-skill">
+                    <input id="new-skill-input" type="text" placeholder="Nueva habilidad..." />
+                    <button id="add-skill-btn">Agregar</button>
+                </div>
+            </section>
+
+            <section id="table" class="card-view">
+                <h2>Tabla de horarios</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Clase</th>
+                            <th>Hora</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="schedule-table"></tbody>
+                </table>
+            </section>
+
+            <section id="contact-me" class="card-view">
+                <h2>Contacto</h2>
+
+                <form id="form-contacto">
+                    <input type="text" id="nombre-contacto" placeholder="Nombre" required>
+                    <input type="email" id="email-contacto" placeholder="Correo electronico" required>
+                    <textarea id="mensaje" rows="4" placeholder="Mensaje..."></textarea>
+                    <span id="error-msg"></span>
+                    <button type="submit">Enviar Mensaje</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <section>
+                <h2>Mas información</h2>
+                <p id="contact-info"></p>
+            </section>
+        </footer>
+
+        <script>
+            const userName = document.getElementById("user-name");
+            const saludo = prompt("¿Cuál es tu nombre?");
+            if (saludo) userName.textContent = `Hola, ${saludo}`;
+            else userName.textContent = `Hola, Usuario`;
+
+            const updateCounter = (user) => {
+                document.getElementById("skills-counter")
+                    .textContent = `Seleccionadas: ${user.selectedSkills.length}`;
+            }
+
+            const inputSkill = document.getElementById("new-skill-input");
+            const addSkillBtn = document.getElementById("add-skill-btn");
+
+            const users = [
+                {
+                    career: "Ingeniería de sistemas",
+                    img: "java.jpg",
+                    about: "Hola, soy Sergio. Me gusta la pizza y programar en Java :v",
+                    skills: ["Java", "Spring Boot", "AWS", "Docker", "Git"],
+                    selectedSkills: [],
+                    schedule: [
+                        ["Programación web", "Viernes 13:00 - 15:00"],
+                        ["Inglés", "Jueves 06:00 - 08:00"],
+                        ["Formulación", "Miércoles 15:00 - 17:00"]
+                    ],
+                    contact: "Whatsapp: 310 220 0400 | sergioalba@unisangil.edu.co"
+                },
+                {
+                    career: "Ingeniería de sistemas",
+                    img: "https://lh3.googleusercontent.com/a/ACg8ocIjaqp_Ulc1ZZhx0gYW6HqwR3VCE_PodrU0EJSnHdBDJk7NXDJB2g=s288-c-no",
+                    about: "Hola, soy Diego. Me gusta el front-end, programar en Android Studio y Angular con arquitecturas escalables.",
+                    skills: ["Kotlin", "Js/Ts", "Java", "UI/UX", "Firebase"],
+                    selectedSkills: [],
+                    schedule: [
+                        ["Formulación", "Miércoles 15:00 - 17:00"],
+                        ["Modelado", "Jueves 13:00 - 15:00"],
+                        ["Programación web", "Viernes 13:00 - 15:00"],
+                    ],
+                    contact: "Whatsapp: 312 627 3300 | diego@gmail.com"
+                }
+            ];
+
+            let currentUser = 0;
+
+            const addSkill = () => {
+                const newSkill = inputSkill.value.trim();
+                if (!newSkill) return;
+
+                if (newSkill.length < 3) {
+                    alert("La habilidad debe contener al menos tres caracteres");
+                    return;
+                }
+
+                const user = users[currentUser];
+                if (user.skills.includes(newSkill)) {
+                    alert("Esa habilidad ya existe");
+                    return;
+                }
+
+                user.skills.push(newSkill);
+                inputSkill.value = "";
+                renderUser(user);
+            };
+
+            addSkillBtn.addEventListener("click", addSkill);
+
+            inputSkill.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") addSkill();
+            });
+
+            const form = document.getElementById("form-contacto");
+            const nombreInput = document.getElementById("nombre-contacto");
+            const emailInput = document.getElementById("email-contacto");
+            const mensajeInput = document.getElementById("mensaje");
+            const errorMsg = document.getElementById("error-msg");
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                errorMsg.textContent = "";
+
+                const nombre = nombreInput.value.trim();
+                const mensaje = mensajeInput.value.trim();
+
+                if (nombre.length < 3) {
+                    errorMsg.textContent =
+                        "El nombre debe tener al menos 3 caracteres.";
+                    return;
+                }
+
+                if (!mensaje) {
+                    errorMsg.textContent =
+                        "El mensaje no puede estar vacío.";
+                    return;
+                }
+
+                alert("Mensaje enviado correctamente");
+                form.reset();
+            });
+
+            const renderUser = (user) => {
+                document.getElementById("user-career").textContent = user.career;
+                document.getElementById("profile-img").src = user.img;
+                document.getElementById("about-text").textContent = user.about;
+
+                const skillsList = document.getElementById("skills-list");
+                skillsList.innerHTML = "";
+                user.skills.forEach(skill => {
+                    const li = document.createElement("li");
+                    li.textContent = skill;
+
+                    if (user.selectedSkills.includes(skill)) {
+                        li.classList.add("seleccionado");
+                    }
+
+                    li.addEventListener("click", () => {
+                        const index = user.selectedSkills.indexOf(skill);
+                        if (index === -1) {
+                            user.selectedSkills.push(skill);
+                            li.classList.add("seleccionado");
+                        } else {
+                            user.selectedSkills.splice(index, 1);
+                            li.classList.remove("seleccionado");
+                        }
+
+                        updateCounter(user);
+                    });
+
+                    skillsList.appendChild(li);
+                });
+
+                updateCounter(user);
+
+                const table = document.getElementById("schedule-table");
+                table.innerHTML = "";
+                user.schedule.forEach(([className, hour]) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${className}</td>
+                        <td>${hour}</td>
+                    `;
+                    table.appendChild(tr);
+                });
+
+                document.getElementById("contact-info").textContent = user.contact;
+
+                const main = document.querySelector("main");
+                main.classList.remove("fade-change");
+                void main.offsetWidth;
+                main.classList.add("fade-change");
+            }
+
+            renderUser(users[currentUser]);
+
+            document.querySelector(".header-actions__button")
+                .addEventListener("click", () => {
+                    currentUser = (currentUser + 1) % users.length;
+                    setTheme(currentUser);
+                    renderUser(users[currentUser]);
+                });
+
+            const setTheme = (user) => {
+                const element = document.querySelector("body");
+                if (user === 1) {
+                    element.classList.add("user2");
+                } else {
+                    element.classList.remove("user2");
+                }
+            }
+        </script>
+    </body>
+</html>
